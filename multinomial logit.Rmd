@@ -447,7 +447,7 @@ Compare our results with the Stata merger-sim package:
 
 
 ```{r}
-stata_sim <- read.csv("test_data2.csv")
+stata_sim <- read.csv("multinomial stata results.csv")
 IA_kable(stata_sim)
 ```
 
