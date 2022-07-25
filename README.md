@@ -1,8 +1,12 @@
 # Merger Simulation
-In these examples, I show how to implement merger simulation in R.
-merger simulation usually comes after estimating an aggregated logit demand system.  
-yet, it is possible to calculate post merger equilibrium using calibrated model parameters.  
-These examples focus on the computation part of the new equilibrium.   
+These two examples show how to implement merger simulation in R.  
+Merger simulation can be done after estimating demand parameters with demand estimation
+or with calibrating assumed demand parameters.   
+  
+
+These examples focus on the computational part - the algebra used to solve the 
+structural model and the fixed point iteration algorithm. 
+
 To calculate the new equilibrium one needs to assume some kind of structural model of 
 supply and demand. In horizontal mergers it is customary to assume a Bertrand model with
 differentiated products, On the demand side a logit model is often used.   
