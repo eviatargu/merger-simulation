@@ -85,6 +85,6 @@ To get a wider perspective about possible implementations for antitrust practiti
 see the work of [Taragin and Sandfort](https://cran.r-project.org/web/packages/antitrust/index.html)
 
 and finally, a very good source to understand the procedure of demant estimaion,
-a good place to start is [Aviv nevo's practitioner's Guide](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1430-9134.2000.00513.x)
+a good place to start is [Aviv nevo's practitioner's Guide](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2152215)
 
 
