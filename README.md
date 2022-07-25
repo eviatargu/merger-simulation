@@ -32,8 +32,8 @@ Differentiating profits with respect to each $p_j$  yields the following first o
 
 
 
-## the multinomial logit model  
-  
+## The multinomial logit model  
+ 
 Logit demand is based on a discrete choice model
 that assumes that each consumer is
 willing to purchase at most a single unit of one product from the
@@ -56,14 +56,11 @@ where  $s_j$ is product $j$'s *quantity* share and
 
 
 The Logit demand system yields the following own- and cross-price elasticities:
+
 \begin{align*}
   \epsilon_{ii}=&\alpha (1-s_i)p_i \\
   \epsilon_{ij}=&-\alpha s_jp_j
 \end{align*}
-
-
-
-
 
 
 in the first example a simple multinomial logit is presented as simple as possible, so
