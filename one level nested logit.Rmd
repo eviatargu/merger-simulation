@@ -1,0 +1,301 @@
+---
+title: "One-level nested logit"
+subtitle: "Merger simulation example"
+author: "Eviatar Guttman"
+date: "Last updated: `r format(Sys.time(), '%d-%m-%Y')`"  
+output: 
+  html_document: 
+    toc: yes
+    toc_depth: 2
+    toc_float: yes
+    toc_collapsed: yes
+    number_sections: yes
+    smooth_scroll: yes
+    fig_caption: yes
+    highlight: tango
+    theme: flatly
+    css: "style.css"
+urlcolor: blue
+editor_options: 
+  chunk_output_type: console
+---  
+
+```{r setup, include = F}
+# global chunk options
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE,
+                      tidy=TRUE,
+                      fig.path='Figures_RMD/',
+                      fig.align = 'center')
+# don't show NA's in tables
+options(knitr.kable.NA = '')
+```
+
+```{r loading packages etc., include = T}
+# load packages
+library(tidyverse)
+library(magrittr)
+options(scipen = 999, digits = 3)
+```
+# Introduction  
+This document shows how to perform merger simulation with assumed One-Level
+nested logit demand system.  
+To perform the simulation one need to go thorough 4 stages: 
+
+  1.  Prepare the data  
+  2. Calculate derivative matrix for the One-level nested logit demand system based on 
+    Price, market shares, Alpha and Sigma.  
+  3. Solve a system of equations that characterize the first order condition of the
+    assumed supply side - Bertrand competition with differentiated products.   
+  4. Calculate a post merger new equilibrium based on post merger system of equations.     
+  
+      
+Next, I'll present the 4 functions that perform each of those steps and briefly review some key points.  
+A complete explanation needs to be in another document
+
+# Functions
+
+Prepare data set - `f1_init_calibration` creates a new data frame in the 
+global environment with necessary variables for the simulation.   
+The new data frame's name is `calibration data`.  
+  
+When calling the function all arguments must to be specified: data frame, prices, quantities,
+a vector of firms, vector of nests, market size, the buyer and the seller
+
+```{r}
+f1_init_calibration <- function(data, p, q, firm, nest, m_size, buyer, seller){
+  
+  data <- data %>%
+    rename(p = {{p}}, q = {{q}},firm = {{firm}}, nest = {{nest}}, m_size = {{m_size}})
+  
+  nest_mat <<- outer(data$nest, data$nest, FUN = "==") * 1
+  
+  calibration_data <<-
+    data %>%
+    select(p, q, firm, nest, m_size) %>%
+    mutate(
+      p = as.numeric(p),
+      q = as.numeric(q),
+      s = q / m_size,
+      s_0 = 1 - sum(s),
+      s_g = as.numeric(nest_mat %*% s),
+      s_jg = s / s_g,
+      firm_post = if_else(firm == {{seller}}, {{buyer}}, firm),
+      n = n()) %>% na.omit()
+}
+```
+`f2_derivatives`  builds and returns the derivative matrix from the shares, alpha and sigma.    
+In one level nested-logit there are 3  types of derivatives:  
+(1) Own derivative, (2) cross derivative for products in the same nest, and (3) 
+cross derivative for products in a different nest.  
+```{r}
+f2_derivatives <- function(shares, nest_shares, alpha, sigma){
+  
+  s     <- shares
+  s_jg  <- nest_shares
+  n     <- length(s)
+  alpha <- - abs(alpha)
+  
+  # nest derivatives
+  cross_different  <- - alpha * s %o% s * (1 - nest_mat)
+  cross_same       <- - alpha * (sigma / (1 - sigma) * s_jg + s) %o% s * nest_mat * (1 - diag(x = 1,nrow = n))
+  own              <-   alpha * s * (1 / (1-sigma) - sigma / (1-sigma) * s_jg - s)
+  
+  derivatives      <- cross_different + cross_same + diag(own)
+  derivatives
+}
+```
+
+`f3_pre_merger_conditions` solves the first order condition of the equation system, and calculates
+several variables:   
+Margin and Lerner index to check profitability, the Delta which is the mean utility
+the consumer has with the prevailing prices and a FOC condition to see if its converging to zero.   
+The new variable are added the the `calibration_data` in the global environment.  
+```{r}
+f3_pre_merger_conditions <- function(c_data, derivatives, sigma){
+  
+  theta <- outer(c_data$firm, c_data$firm, FUN = "==") * 1
+  s <- c_data$s
+  p <- c_data$p
+  
+  c_data$mc <- solve(derivatives * theta) %*% s + p
+  
+  c_data <- c_data %>% mutate(margin = p - mc,
+                              lerner_index = (p - mc) / p,
+                              FOC = as.vector(s + (theta * derivatives) %*% (p - mc)),
+                              delta =  log(s / s_0)  - sigma * log(s_jg)
+                              )
+  
+  calibration_data <<- c_data
+}
+```
+
+`f4_fixed_point` calculates the new equilibrium with fixed point iteration.    
+It uses the `f5_demand`, `f2_derivatives` and solves the FOC iteratively until
+solution is reached or until the maximum number of iterations is reached.   
+the user has control over the maximum number of iterations and the tolarance desired
+for convergence.    
+we shall expand about the argument `convergence_factor` later. 
+```{r}
+f4_fixed_point <- 
+  function(data, alpha, sigma, max_iter = 100, convergence_factor = 1, tolerance = 1e-3){
+    
+    theta_post <- outer(data$firm_post, data$firm_post, FUN = "==") * 1
+    s_in       <- data$s
+    p          <- data$p
+    mc         <- data$mc
+    delta      <- data$delta
+    der_new    <- f2_derivatives(calibration_data$s, calibration_data$s_jg, alpha, sigma)
+    re         <- matrix(nrow = max_iter, ncol = length(s_in) + 2)
+    i          <- 0
+    s_d_norm   <- 1
+    
+    while(i < max_iter & s_d_norm > tolerance){
+      
+      i         <- i + 1
+      p_new     <- mc - (solve(der_new * theta_post)) %*% s_in  # new price
+      delta_new <- delta - abs(alpha) * as.vector((p_new - p)/ convergence_factor)
+      s_new     <- f5_demand(delta_new, sigma)
+      der_new   <- f2_derivatives(s_new$s_t, s_new$s_jg_t, alpha, sigma)
+      s_d_norm  <- sqrt(sum((s_in - s_new[[1]]) ^ 2)) # measure convergence
+      s_in      <- s_new[[1]]    # new price vector to feed in
+      re[i,]    <- c(p_new, norm = s_d_norm,iteration = i) # results
+      
+    }
+    
+    re       <- data.frame(re) %>% drop_na()
+    names(re)<- c(paste("p", 1:length(s_in), sep = "_"), "norm", "iter")
+    
+    tail     <- tail(re,1)
+    
+    data$new_prices <- tail %>% select(starts_with("p_")) %>% t() %>% as.vector()
+    data$iterations <- tail %>% select(iter) %>% pull()
+    data$norm       <- tail %>% select(norm) %>% pull()
+    data$new_shares <- s_new[[1]]
+    
+    calibration_results <<- data %>% select(firm, nest, p, new_prices, s, new_shares,
+                                            iterations, norm, q, m_size)
+    
+    re
+  }
+```
+
+Every time the prices change, the mean utility of the consumer changes, hence the 
+quantity demand will change.   
+`f5_demand` calculates the market shares that will prevail given a vector of prices.  
+This is the demand function.   
+The user need not operate this function. it is called from within `f4_fixed_point`. 
+```{r}
+f5_demand <- function(delta, sigma){
+  
+  # demand function
+  exponent    <- exp(delta /(1-sigma))
+  D_g         <- unique(nest_mat, MARGIN = 1) %*%  exponent
+  denominator <- D_g ^ sigma * (1 + sum(D_g^(1-sigma)))
+  s_t         <- as.vector(exponent * unique(nest_mat, MARGIN = 2) %*% (1/ as.vector(denominator)))
+  
+  # nest shares
+  s_g  <- as.numeric(nest_mat %*% s_t)  # nest market share
+  s_jg <- s_t / s_g                     # share within the nest
+  
+  data.frame(s_t = s_t, s_jg_t = s_jg, delta_t = delta, n = length(s_t))
+}
+```
+
+# Build toy data
+Create a toy data of 6 products owned by 3 firms, divided into 2 nests.  
+market size will be 100. 
+```{r}
+df <- data.frame(
+  company  = c("a",     "a",     "b",    "b", "c", "c"),
+  nests    = c("pre",   "pre",   "pre",   2,   2,   2),
+  quantity = c( 20,      5,       10,     5,   10,  25),
+  price    = c( 60,      40,      50,     45,  30,  30),
+  m_size   = 100,
+  not_needed_variable = "junk")
+df
+```
+
+We can prepare the data for simulation using `f1_init_calibration`:   
+Note that all argument are needed for the function to know which variable is which:   
+prices, quantities, firm, nest, market size, buyer and seller. 
+```{r}
+f1_init_calibration(df, p = price, q = quantity, firm = company, nest = nests,
+                    m_size = m_size, buyer = 'a', seller = 'b')
+```
+
+A new df named`calibration_data` was created in the global environment: 
+```{r}
+calibration_data
+```
+
+
+# Assume regression results  
+Next, we need to assume we have alpha and sigma. Either from a demand estimation 
+results or from our knowledge of the market. 
+```{r}
+sigma0.5 <- 0.5
+alpha0.1 <- 0.1
+```
+
+# Checking Derivatives
+We show how the derivative matrix is like for this toy data.  
+In actual simulation this function is being called from f4_fixed_point,
+so there is no need to call it.   
+Arguments need to be called explicitly from within the data: 
+
+```{r}
+der <- f2_derivatives(calibration_data$s, calibration_data$s_jg, alpha0.1, sigma0.5)
+der
+```
+The own derivative in the diagonal is always negative while the cross derivatives 
+are positive. 
+
+
+# Pre-merger conditions  
+Now we calculate the MC of the firms. all new variables are added to the `calibration_data`  
+To solve the system of equations the there no need for sigma. 
+Sigma is used to calculate delta
+```{r}
+f3_pre_merger_conditions(calibration_data, der, sigma0.5)
+calibration_data
+```
+
+# Just checking the demand system
+For the sake of presentation, lets see that the demand function works correctly.  
+feeding the delta's consumers had, we should get the same market shares we assumed.  
+Every time the price will change, the delta will change and so the shares. 
+```{r}
+f5_demand(calibration_data$delta, sigma0.5)
+```
+
+
+
+# Simulate the merger 
+Finally, we can simulate the merger.  
+Using the fixed point iteration, we get a new df named `calibration_results` with the results of the simulation.  
+The function prints the iterated prices in the R console. 
+```{r}
+f4_fixed_point(calibration_data, alpha0.1, sigma0.5, convergence_factor = 1.2)
+calibration_results
+```
+`calibration_results` gives the new prices and new shares, reports how many iterations were needed 
+to converge to the tolerance of 1/1000 and reports the norm of the change in prices in the last iteration.  
+
+Note that when we called `f4_fixed_point` we used a `convergenc_factor` of 1.2.      
+As it happens, this data consists of only 6 observations and the fixed point doesn't 
+converge naturally.   
+At best practice, one should use a `convergence_factor` of 1, and only if
+there's a problem to choose a `convergence_factor` > 1.   
+Lets see what happens in this example when it is 1: 
+
+```{r}
+f4_fixed_point(calibration_data, alpha0.1, sigma0.5, convergence_factor = 1)
+```
+Note the price and shares jump between two points. 
+Also, `calibration_resaults` tells you that the `norm` is far away from zero: 
+```{r}
+calibration_results
+```
+
