@@ -33,6 +33,13 @@ see the work of [Taragin and Sandfort](https://cran.r-project.org/web/packages/a
 and finally, a very good source to understand the procedure of demant estimaion,
 a good place to start is [Aviv nevo's practitioner's Guide](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1430-9134.2000.00513.x)
 
+## little bit of backround 
+next, we explain a little bit about the chosen structural model. first, the equations 
+of the Bertrand model followed by the simple logit demand system.
 
+### Bertrand model with differentiated products  
+
+In this model, Firm $k \in K$ chooses the prices $\{p_j\}_{j=1}^{n_k}$ of its
+products so as to maximize profits. Mathematically, firm $k$ solves:
 
 ![](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cmax_%7B%5C%7Bp_j%5C%7D_%7Bj%3D1%7D%5E%7Bn_k%7D%7D%20%26%5Csum_%7Bj%3D1%7D%5E%7Bn_k%7D%28%5Comega_%7Bjk%7D%29%28p_j%20-%20c_j%29q_j%2C%20%5Cend%7Balign*%7D)
