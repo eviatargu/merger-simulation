@@ -66,7 +66,10 @@ purchases product $j \in n$ is given by
 where  $s_j$ is product $j$'s *quantity* share and
     $V_j$ is the (average) indirect utility that a consumer
     receives from purchasing product $j$. We assume that $V_j$ takes on
-    the following form
+    the following form  
 ![](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20V_j%3D%26%5Cdelta_j%20&plus;%20%5Calpha%20p_j%2C%26%5Calpha%3C0.%20%5Cend%7Balign*%7D)
     
+The Logit demand system yields the following own- and cross-price elasticities:  
+![](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cepsilon_%7Bii%7D%3D%26%5Calpha%20%281-s_i%29p_i%20%5C%5C%20%5Cepsilon_%7Bij%7D%3D%26-%5Calpha%20s_jp_j%20%5Cend%7Balign*%7D)
+
 
