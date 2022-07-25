@@ -18,21 +18,6 @@ demand system, no analytic solution exists so some kind of numeric method is req
 to solve the system - here we'll use fixed point iteration. 
 
 
-  
-## Usfull references
-</br>
-For more information about the mathematical implementation and the theory, one can read: 
-[Björnerstedt and Verboven](https://www.stata-journal.com/article.html?article=st0349).
-  
-To understand more about the Logit demand system (multinumial and nested logit) and 
-the implementation is this repository its best to read [berry 1994](https://www.jstor.org/stable/2555829#metadata_info_tab_contents).
-  
-To get a wider perspective about possible implementations for antitrust practitioners,
-see the work of [Taragin and Sandfort](https://cran.r-project.org/web/packages/antitrust/index.html)
-
-and finally, a very good source to understand the procedure of demant estimaion,
-a good place to start is [Aviv nevo's practitioner's Guide](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1430-9134.2000.00513.x)
-
 ## little bit of backround 
 next, we explain a little bit about the chosen structural model. first, the equations 
 of the Bertrand model followed by the simple logit demand system.
@@ -75,3 +60,17 @@ The Logit demand system yields the following own- and cross-price elasticities:
 ![](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cepsilon_%7Bii%7D%3D%26%5Calpha%20%281-s_i%29p_i%20%5C%5C%20%5Cepsilon_%7Bij%7D%3D%26-%5Calpha%20s_jp_j%20%5Cend%7Balign*%7D)
 
 
+
+## Usefull references
+</br>
+For more information about the mathematical implementation and the theory, one can read: 
+[Björnerstedt and Verboven](https://www.stata-journal.com/article.html?article=st0349).
+  
+To understand more about the Logit demand system (multinumial and nested logit) and 
+the implementation is this repository its best to read [berry 1994](https://www.jstor.org/stable/2555829#metadata_info_tab_contents).
+  
+To get a wider perspective about possible implementations for antitrust practitioners,
+see the work of [Taragin and Sandfort](https://cran.r-project.org/web/packages/antitrust/index.html)
+
+and finally, a very good source to understand the procedure of demant estimaion,
+a good place to start is [Aviv nevo's practitioner's Guide](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1430-9134.2000.00513.x)
