@@ -68,8 +68,10 @@ where  $s_j$ is product $j$'s *quantity* share and
 
 The Logit demand system yields the following own- and cross-price elasticities:  
 
-<img src="https://render.githubusercontent.com/render/math?math=\epsilon_{ii}=&\alpha (1-s_i)p_i \\
-  \epsilon_{ij}=&-\alpha s_jp_j">
+<img src="https://render.githubusercontent.com/render/math?math=\begin{align*}
+  \epsilon_{ii}=&\alpha (1-s_i)p_i \\
+  \epsilon_{ij}=&-\alpha s_jp_j
+\end{align*}">
   
 ## usefull references
 </br>
