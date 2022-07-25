@@ -50,3 +50,4 @@ so that $\sum\limits_{k\in K} \omega_{jk}\le 1$. $q_j$, the quantity sold of pro
 be a twice differentiable function of *all* product prices.
 
 Differentiating profits with respect to each $p_j$  yields the following first order conditions (FOCs):
+![](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cpartial%20p_j%26%5Cequiv%20%5Comega_%7Bjk%7Dq_j%20&plus;%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%5Comega_%7Bjk%7D%28%20p_j%20-%20c_j%29%5Cfrac%7B%5Cpartial%20q_j%7D%7B%5Cpartial%20p_j%7D%3D0%26%20%5Cmbox%7B%20for%20all%20%24j%5Cin%20n_k%24%7D%20%5Cend%7Balign*%7D)
