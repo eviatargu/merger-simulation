@@ -18,62 +18,8 @@ demand system, no analytic solution exists so some kind of numeric method is req
 to solve the system - here we'll use fixed point iteration. 
 
 
-## little bit of backround 
-next, we explain a little bit about the chosen structural model. first, the equations 
-of the Bertrand model followed by the simple logit demand system.
-
-### Bertrand model with differentiated products  
-
-In this model, Firm $k \in K$ chooses the prices $\{p_j\}_{j=1}^{n_k}$ of its
-products so as to maximize profits. Mathematically, firm $k$ solves:
-
-\begin{align*}
-\max_{\{p_j\}_{j=1}^{n_k}} &\sum_{j=1}^{n_k}(\omega_{jk})(p_j - c_j)q_j,
-\end{align*}
-
-where $\omega_{ik}$ is the share of product $j$'s profits earned by firm $k$,
-so that $\sum\limits_{k\in K} \omega_{jk}\le 1$. $q_j$, the quantity sold of product $j$,  is assumed to
-be a twice differentiable function of *all* product prices.
-
-Differentiating profits with respect to each $p_j$  yields the following first order conditions (FOCs):
-
-\begin{align*}
-  \partial p_j&\equiv \omega_{jk}q_j +\sum_{j=1}^{n}\omega_{jk}( p_j - c_j)\frac{\partial q_j}{\partial
-    p_j}=0& \mbox{ for all $j\in n_k$} 
-\end{align*}
-
-
-
-### The multinomial logit model  
-Logit demand is based on a discrete choice model
-that assumes that each consumer is
-willing to purchase at most a single unit of one product from the
-$n$ products available in the market. The assumptions underlying
-Logit demand imply that the probability that a consumer
-purchases product $j \in n$ is given by
-
-\begin{align*}
-  s_j=& \frac{\exp(V_j)}{\sum\limits_{k \in n}\exp(V_k)},&
-\end{align*}
-
-where  $s_j$ is product $j$'s *quantity* share and
-    $V_j$ is the (average) indirect utility that a consumer
-    receives from purchasing product $j$. We assume that $V_j$ takes on
-    the following form
-    
-\begin{align*}
-  V_j=&\delta_j + \alpha p_j,&\alpha<0.
-\end{align*}
-
-
-The Logit demand system yields the following own- and cross-price elasticities:  
-
-<img src="https://render.githubusercontent.com/render/math?math=\begin{align*}
-  \epsilon_{ii}=&\alpha (1-s_i)p_i \\
-  \epsilon_{ij}=&-\alpha s_jp_j
-\end{align*}">
   
-## usefull references
+## Usfull references
 </br>
 For more information about the mathematical implementation and the theory, one can read: 
 [Björnerstedt and Verboven](https://www.stata-journal.com/article.html?article=st0349).
@@ -85,6 +31,5 @@ To get a wider perspective about possible implementations for antitrust practiti
 see the work of [Taragin and Sandfort](https://cran.r-project.org/web/packages/antitrust/index.html)
 
 and finally, a very good source to understand the procedure of demant estimaion,
-a good place to start is [Aviv nevo's practitioner's Guide](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2152215)
-
+a good place to start is [Aviv nevo's practitioner's Guide](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1430-9134.2000.00513.x)
 
