@@ -63,8 +63,8 @@ The Logit demand system yields the following own- and cross-price elasticities:
 
 ## Usefull references
 </br>
-For more information about the mathematical implementation and the theory, one can read: 
-[Björnerstedt and Verboven](https://www.stata-journal.com/article.html?article=st0349).
+For more information about the mathematical implementation and the theory, one can read:
+[Björnerstedt and Verboven](https://www.stata-journal.com/article.html?article=st0349)
   
 To understand more about the Logit demand system (multinumial and nested logit) and 
 the implementation is this repository its best to read [berry 1994](https://www.jstor.org/stable/2555829#metadata_info_tab_contents).
