@@ -51,3 +51,22 @@ be a twice differentiable function of *all* product prices.
 
 Differentiating profits with respect to each $p_j$  yields the following first order conditions (FOCs):
 ![](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cpartial%20p_j%26%5Cequiv%20%5Comega_%7Bjk%7Dq_j%20&plus;%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%5Comega_%7Bjk%7D%28%20p_j%20-%20c_j%29%5Cfrac%7B%5Cpartial%20q_j%7D%7B%5Cpartial%20p_j%7D%3D0%26%20%5Cmbox%7B%20for%20all%20%24j%5Cin%20n_k%24%7D%20%5Cend%7Balign*%7D)
+
+
+### The multinomial logit model  
+Logit demand is based on a discrete choice model
+that assumes that each consumer is
+willing to purchase at most a single unit of one product from the
+$n$ products available in the market. The assumptions underlying
+Logit demand imply that the probability that a consumer
+purchases product $j \in n$ is given by
+
+![](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20s_j%3D%26%20%5Cfrac%7B%5Cexp%28V_j%29%7D%7B%5Csum%5Climits_%7Bk%20%5Cin%20n%7D%5Cexp%28V_k%29%7D%2C%26%20%5Cend%7Balign*%7D)
+
+where  $s_j$ is product $j$'s *quantity* share and
+    $V_j$ is the (average) indirect utility that a consumer
+    receives from purchasing product $j$. We assume that $V_j$ takes on
+    the following form
+![](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20V_j%3D%26%5Cdelta_j%20&plus;%20%5Calpha%20p_j%2C%26%5Calpha%3C0.%20%5Cend%7Balign*%7D)
+    
+
