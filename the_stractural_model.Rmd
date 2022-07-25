@@ -1,5 +1,5 @@
 ---
-title: "a little bit of theory"
+title: "The stractural model"
 output: html_document
 ---
 
