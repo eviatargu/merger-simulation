@@ -9,10 +9,10 @@ and demand.
   
 This repository presents two examples of implementation of simple specification in R for 
 horizontal merger.   
-for step (1) on the supply side we'll use a Bertrand model with
+For step (1) on the supply side we'll use a Bertrand model with
 differentiated products for the supply side. on the demand side versions of logit demand
-systems will be uses. this specification is common for competition authorities to work with.
-for step (2) the techniques are common, the harder one is implementing demand estimation of the demand function parameters. It is a demanding process both in terms of the required data and in terms of the required scope of work. Another approach is to calibrate the model using carefully selected parameters - this is what we'll do here. 
+systems will be uses. this specification is common for competition authorities to work with.  
+For step (2) the techniques are common, the harder one is implementing demand estimation of the demand function parameters. It is a demanding process both in terms of the required data and in terms of the required scope of work. Another approach is to calibrate the model using carefully selected parameters - this is what we'll do here.   
 Finaly for step (3) a new equilibrium needs to be calculated. in case of a non-linear 
 demand system, no analytic solution exists so some kind of numeric method is required 
 to solve the system - here we'll use fixed point iteration. 
