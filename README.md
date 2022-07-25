@@ -10,27 +10,20 @@ and demand.
 This repository presents two examples of implementation of simple specification in R for 
 horizontal merger.   
 
-for step (1) on the supply side we'll use a Bertrand model with
-differentiated products for the supply side. on the demand side versions of logit demand
-systems will be uses. this specification is common for competition authorities to work with.
-for step (2) the techniques are common, the harder one is implementing demand estimation of the demand function parameters. It is a demanding process both in terms of the required data and in terms of the required scope of work. Another approach is to calibrate the model using carefully selected parameters - this is what we'll do here. 
-
 For step (1) on the supply side we'll use a Bertrand model with
 differentiated products for the supply side. on the demand side versions of logit demand
 systems will be uses. this specification is common for competition authorities to work with.  
-For step (2) the techniques are common, the harder one is implementing demand estimation of the demand function parameters. It is a demanding process both in terms of the required data and in terms of the required scope of work. Another approach is to calibrate the model using carefully selected parameters - this is what we'll do here.   
+For step (2) the techniques are common, the harder one is implementing demand estimation of the demand function parameters. It is a demanding process both in terms of the required data and in terms of the required scope of work. Another approach is to calibrate the model using carefully selected parameters - this is what we'll do here.     
 Finaly for step (3) a new equilibrium needs to be calculated. in case of a non-linear 
 demand system, no analytic solution exists so some kind of numeric method is required 
 to solve the system - here we'll use fixed point iteration. 
-
-
-
+  
 ## little bit of backround 
 next, we explain a little bit about the chosen structural model. first, the equations 
 of the Bertrand model followed by the simple logit demand system.
 
 ### Bertrand model with differentiated products  
-
+  
 In this model, Firm $k \in K$ chooses the prices $\{p_j\}_{j=1}^{n_k}$ of its
 products so as to maximize profits. Mathematically, firm $k$ solves:
 
@@ -42,8 +35,7 @@ be a twice differentiable function of *all* product prices.
 
 Differentiating profits with respect to each $p_j$  yields the following first order conditions (FOCs):
 ![](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cpartial%20p_j%26%5Cequiv%20%5Comega_%7Bjk%7Dq_j%20&plus;%5Csum_%7Bj%3D1%7D%5E%7Bn%7D%5Comega_%7Bjk%7D%28%20p_j%20-%20c_j%29%5Cfrac%7B%5Cpartial%20q_j%7D%7B%5Cpartial%20p_j%7D%3D0%26%20%5Cmbox%7B%20for%20all%20%24j%5Cin%20n_k%24%7D%20%5Cend%7Balign*%7D)
-
-
+  
 ### The multinomial logit model  
 Logit demand is based on a discrete choice model
 that assumes that each consumer is
