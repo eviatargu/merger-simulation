@@ -43,3 +43,10 @@ In this model, Firm $k \in K$ chooses the prices $\{p_j\}_{j=1}^{n_k}$ of its
 products so as to maximize profits. Mathematically, firm $k$ solves:
 
 ![](https://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cmax_%7B%5C%7Bp_j%5C%7D_%7Bj%3D1%7D%5E%7Bn_k%7D%7D%20%26%5Csum_%7Bj%3D1%7D%5E%7Bn_k%7D%28%5Comega_%7Bjk%7D%29%28p_j%20-%20c_j%29q_j%2C%20%5Cend%7Balign*%7D)
+
+
+where $\omega_{ik}$ is the share of product $j$'s profits earned by firm $k$,
+so that $\sum\limits_{k\in K} \omega_{jk}\le 1$. $q_j$, the quantity sold of product $j$,  is assumed to
+be a twice differentiable function of *all* product prices.
+
+Differentiating profits with respect to each $p_j$  yields the following first order conditions (FOCs):
