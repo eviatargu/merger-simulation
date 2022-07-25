@@ -1,4 +1,4 @@
-# Merger Simulation
+# Merger Simulation   
 Merger simulation is a quantitative tool to create prediction about the 
 probable outcome effect of a merger on competition. 
 The process includes three stages:  
