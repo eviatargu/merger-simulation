@@ -63,8 +63,7 @@ The Logit demand system yields the following own- and cross-price elasticities:
 
 ## Usefull references
 </br>
-For more information about the mathematical implementation and the theory, one can read
-[Björnerstedt and Verboven](https://www.stata-journal.com/article.html?article=st0349)
+For more information about the mathematical implementation and the theory, one can read [Björnerstedt and Verboven](https://www.stata-journal.com/article.html?article=st0349)
   
 To understand more about the Logit demand system (multinumial and nested logit) and 
 the implementation is this repository its best to read [berry 1994](https://www.jstor.org/stable/2555829#metadata_info_tab_contents).
@@ -72,5 +71,5 @@ the implementation is this repository its best to read [berry 1994](https://www.
 To get a wider perspective about possible implementations for antitrust practitioners,
 see the work of [Taragin and Sandfort](https://cran.r-project.org/web/packages/antitrust/index.html)
 
-and finally, a very good source to understand the procedure of demant estimaion,
+And finally, a very good source to understand the procedure of demant estimaion,
 a good place to start is [Aviv nevo's practitioner's Guide](https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1430-9134.2000.00513.x)
